@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf8 -*-
+
 from alpha_shape import alpha_shape
 from colour import Color
 from poisson_disc import poisson_disc
@@ -83,7 +86,7 @@ def find_path(layer, points, threshold):
     x = x.translate(random.random() * 1000, random.random() * 1000)
     x = x.scale(0.01, 0.01)
     g = graph.make_graph(points, threshold, x)
-    end = max(points, key=lambda (x, y): layer.get(x, y))
+    end = max(points, key=layer.get)
     points.sort(key=lambda (x, y): math.hypot(x - end[0], y - end[1]))
     for start in reversed(points):
         path = graph.shortest_path(g, end, start)
@@ -169,6 +172,6 @@ def render(seed=None):
 
 if __name__ == '__main__':
     for seed in range(100):
-        print seed
+        print(seed)
         surface = render(seed)
         surface.write_to_png('out%04d.png' % seed)
